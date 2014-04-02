@@ -10,7 +10,9 @@ module.exports = function(config) {
     app.logger(function(ns, level, str, task) {
       var prefix = ns + ':' + level + ' [' + task.repo + '#' + task.branch + ']';
       str.split("\n").forEach(function(line) {
-        process.stdout.write(prefix + line);
+        var out = prefix + line;
+        if (ns === 'progress') return process.stdout.write(out);
+        console.log(out);
       });
     });
   };
